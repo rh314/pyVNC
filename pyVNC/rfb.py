@@ -12,6 +12,7 @@ http://www.realvnc.com/docs/rfbproto.pdf
 MIT License
 """
 
+import sys
 from struct import pack, unpack
 
 from twisted.protocols.policies import TimeoutMixin
@@ -638,6 +639,8 @@ class RFBDes(pyDes.des):
            challenge sent by server with password using DES method. However,
            bits in each byte of the password are put in reverse order before
            using it as encryption key."""
+        if sys.version_info[0] < 3:
+            raise Exception('Python 2 not supported')
         newkey = []
         for ki in range(len(key)):
             bsrc = ord(key[ki])
@@ -645,5 +648,5 @@ class RFBDes(pyDes.des):
             for i in range(8):
                 if bsrc & (1 << i):
                     btgt = btgt | (1 << 7 - i)
-            newkey.append(chr(btgt))
+            newkey.append(chr(btgt).encode('latin1'))
         super(RFBDes, self).setKey(newkey)

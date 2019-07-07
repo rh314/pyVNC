@@ -20,8 +20,5 @@ if __name__ == '__main__':
                     fast=args.fast,
                     shared=args.shared,
                     gui=True,
-                    gui_with_array=False
                  )
-    vnc.start()
-
-
+    vnc.run()

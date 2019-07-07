@@ -8,7 +8,7 @@ from pyVNC.VNCFactory import VNCFactory
 import logging
 logger = logging.getLogger("pyVNC")
 
-class Client(Thread):
+class Client():
     def __init__(self, host="127.0.0.1", password=None, port=5902, depth=32, fast=False, shared=True, gui=False, array=False, callbacks=[]):
         Thread.__init__(self)
         pygame.init()
