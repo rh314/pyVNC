@@ -1,3 +1,12 @@
+# fork notes:
+This was forked from https://github.com/cair/pyVNC.  
+To make it work on macOS Mojave and Python 3.7.3, the following changes were needed:
+* Mac doesn't allow canvas updates from non-main threads. I solved this by _not_ subclassing `class Client` from `Thread` (in `pyVNC/Client.py `) and by starting it with `.run` instead of `.start`.
+* `pyVNC/pyDes.py:__String_to_BitList`: Python 2 vs 3 handling of bytes vs str is always a mess. Dropped python 2 support and handled the case where the input was a list of bytes instead of just bytes.
+* `pyVNC/rfb.py:RFBDes:setKey`: More Python 2 vs 3 bytes issues. Forced characters to bytes by encoding them as latin-1.
+* You need to install and reinstall some libraries as well as per:  
+  https://github.com/pygame/pygame/issues/555#issuecomment-483524285
+
 # pyVNC
 pyVNC Client is a client library for interacting programatically (and physically) with a VNC session.
 pyVNC Client that is built with
@@ -8,7 +17,7 @@ The client supports the following encodings: `Hextile, CoRRE, RRE, RAW, CopyRect
 
 pyVNC is tested for `Python >= 3.5`
 
-#Usage
+# Usage
 
 ## Example 1
 ```py
